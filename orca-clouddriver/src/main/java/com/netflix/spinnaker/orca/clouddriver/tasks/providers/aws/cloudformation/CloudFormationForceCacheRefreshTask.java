@@ -103,6 +103,11 @@ public class CloudFormationForceCacheRefreshTask
     checkPendingRefreshes(cloudProvider, stageData, startTime);
     refreshStacks(cloudProvider, stageData);
 
+    log.info(
+      "DEBUG Disabling Caching Agents - stageData.processedStacks = {} and stageData.deployedStacks = {} . When these 2 are equals, the Stage will SUCCEED.",
+      stageData.processedStacks,
+      stageData.deployedStacks);
+
     if (stageData.processedStacks.equals(stageData.deployedStacks)) {
       stageData.reset();
       return TaskResult.builder(SUCCEEDED).context(toContext(stageData)).build();
